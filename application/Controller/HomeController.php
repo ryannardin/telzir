@@ -8,6 +8,7 @@ class HomeController
 {
     public function index()
     {
+        
         view('_templates/header.php');
         view('home/index.php');
         view('_templates/footer.php');
@@ -15,9 +16,9 @@ class HomeController
     public function calcularPlano()
     {
         $plano = new Plano();
-        $dadosCalculados= $plano->calcPlano($_POST['origem'],$_POST['destino'],$_POST['minutos']);  
+        $dataPlan= $plano->calcPlan($_POST['origin'],$_POST['destiny'],$_POST['minutes']);  
         view('_templates/header.php');
-        view('home/index.php',["dadosCalculados" => $dadosCalculados,'minutos'=>$_POST['minutos']]);
+        view('home/index.php',["dataPlan" => $dataPlan,'minutes'=>$_POST['minutes']]);
         view('_templates/footer.php');
     }
 }

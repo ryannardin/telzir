@@ -2,66 +2,68 @@
 
 namespace Mini\Model;
 
+use stdClass;
+
 class Plano
 {
-    private $valores=[
-        ['origem'=>11,'destino'=>16,'valor'=>1.90],
-        ['origem'=>16,'destino'=>11,'valor'=>2.90],
-        ['origem'=>11,'destino'=>17,'valor'=>1.70],
-        ['origem'=>17,'destino'=>11,'valor'=>2.70],
-        ['origem'=>11,'destino'=>18,'valor'=>0.90],
-        ['origem'=>18,'destino'=>11,'valor'=>1.90]
+    private $values=[
+        ['origin'=>11,'destiny'=>16,'value'=>1.90],
+        ['origin'=>16,'destiny'=>11,'value'=>2.90],
+        ['origin'=>11,'destiny'=>17,'value'=>1.70],
+        ['origin'=>17,'destiny'=>11,'value'=>2.70],
+        ['origin'=>11,'destiny'=>18,'value'=>0.90],
+        ['origin'=>18,'destiny'=>11,'value'=>1.90]
     ];
-    public function calcPlano($origem,$destino,$minutos)
+    public function calcPlan($origin,$destiny,$minutes)
     {
-        $dadosCalculados=(object)[];
-        $valores=$this->buscarValores($origem, $destino);
-        $valor=$valores['valor'];
-        $dadosCalculados->semPlano=['valorLigacao'=>$minutos*$valor,'valorTotal'=>$minutos*$valor,'valorPlano'=>0,'nomePlano'=>'semPlano'];
-        $dadosCalculados->faleMais30=$this->calcularfaleMais($valor,$minutos,'30');
-        $dadosCalculados->faleMais60=$this->calcularfaleMais($valor,$minutos,'60');
-        $dadosCalculados->faleMais120=$this->calcularfaleMais($valor,$minutos,'120');
-        $dadosCalculados->melhorPlano=$this->buscarMelhorPlano($dadosCalculados);
-        return $dadosCalculados;
+        $dataPlan=(object)[];
+        $values=$this->searchvalues($origin, $destiny);
+        $value=$values['value'];
+        $dataPlan->withoutPlan=['callValue'=>$minutes*$value,'total'=>$minutes*$value,'planValue'=>0,'planName'=>'semPlano'];
+        $dataPlan->faleMais30=$this->calcFaleMais($value,$minutes,'30');
+        $dataPlan->faleMais60=$this->calcFaleMais($value,$minutes,'60');
+        $dataPlan->faleMais120=$this->calcFaleMais($value,$minutes,'120');
+        $dataPlan->bestPlan=$this->searchBestPlan($dataPlan);
+        return $dataPlan;
     }
-    private function calcularfaleMais($valor,$minutos,$faleMais)
+    private function calcFaleMais($value,$minutes,$faleMais)
     {
-        $valorLigacao=$minutos*($valor*1.1);
+        $valueLigacao=$minutes*($value*1.1);
         switch($faleMais){
             case '30':
-                if($minutos<=30)
-                    return ['valorTotal'=>59.99,'valorLigacao'=>0,'minutos'=>30,'valorPlano'=>59.99,'nomePlano'=>'FaleMais 30'];
+                if($minutes<=30)
+                    return ['total'=>59.99,'callValue'=>0,'minutes'=>30,'planValue'=>59.99,'planName'=>'FaleMais 30'];
                 else
-                    return ['valorTotal'=>59.99+ $valorLigacao,'valorLigacao'=>$valorLigacao,'minutos'=>30,'valorPlano'=>59.99,'nomePlano'=>'FaleMais 30'];    
+                    return ['total'=>59.99+ $valueLigacao,'callValue'=>$valueLigacao,'minutes'=>30,'planValue'=>59.99,'planName'=>'FaleMais 30'];    
             break;
             case '60':
-                if($minutos<=60)
-                    return ['valorTotal'=>109.99,'valorLigacao'=>0,'minutos'=>60,'valorPlano'=>109.99,'nomePlano'=>'FaleMais 60'];
+                if($minutes<=60)
+                    return ['total'=>109.99,'callValue'=>0,'minutes'=>60,'planValue'=>109.99,'planName'=>'FaleMais 60'];
                 else
-                    return ['valorTotal'=>109.99+ $valorLigacao,'valorLigacao'=>$valorLigacao,'minutos'=>60,'valorPlano'=>109.99,'nomePlano'=>'FaleMais 60'];     
+                    return ['total'=>109.99+ $valueLigacao,'callValue'=>$valueLigacao,'minutes'=>60,'planValue'=>109.99,'planName'=>'FaleMais 60'];     
             break;
             case '120':
-                if($minutos<=120)
-                    return ['valorTotal'=>199.99,'valorLigacao'=>0,'minutos'=>120,'valorPlano'=>199.99,'nomePlano'=>'FaleMais 120'];
+                if($minutes<=120)
+                    return ['total'=>199.99,'callValue'=>0,'minutes'=>120,'planValue'=>199.99,'planName'=>'FaleMais 120'];
                 else  
-                    return ['valorTotal'=>199.99+ $valorLigacao,'valorLigacao'=>$valorLigacao,'minutos'=>120,'valorPlano'=>199.99,'nomePlano'=>'FaleMais 120'];
+                    return ['total'=>199.99+ $valueLigacao,'callValue'=>$valueLigacao,'minutes'=>120,'planValue'=>199.99,'planName'=>'FaleMais 120'];
             break;
         }
     }
-    private function buscarValores($origem, $destino) {
-        foreach ($this->valores as $key => $val) 
-            if ($val['origem']==$origem && $val['destino']==$destino) 
-                return $this->valores[$key];
+    private function searchvalues($origin, $destiny) {
+        foreach ($this->values as $key => $val) 
+            if ($val['origin']==$origin && $val['destiny']==$destiny) 
+                return $this->values[$key];
     }
-    private function buscarMelhorPlano($dadosCalculados){
-        $menorValor=null;
-        $keyMenorValor=null;
-        foreach ($dadosCalculados as $key => $dadoCalculado) {
-            if($menorValor==null || $dadoCalculado['valorTotal']<$menorValor){
-                $menorValor=$dadoCalculado['valorTotal'];
-                $keyMenorValor=$key;
+    private function searchBestPlan($dataPlan){
+        $lowerValue=null;
+        $keyLowerValue=null;
+        foreach ($dataPlan as $key => $dadoCalculado) {
+            if($lowerValue==null || $dadoCalculado['total']<$lowerValue){
+                $lowerValue=$dadoCalculado['total'];
+                $keyLowerValue=$key;
             }
         }
-        return $dadosCalculados->$keyMenorValor;
+        return $dataPlan->$keyLowerValue;
     }
 }

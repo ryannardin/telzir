@@ -12,7 +12,7 @@
             <div class="form-container">
                 <div class="input-field">
                     <p>DDD de origem</p>
-                    <select name='origem' id='origem'>
+                    <select name='origin' id='origin'>
                         <option>11</option>
                         <option>16</option>
                         <option>17</option>
@@ -21,7 +21,7 @@
                 </div>
                 <div class="input-field">
                     <p>DDD de destino</p>
-                    <select name='destino' id=destino>
+                    <select name='destiny' id=destiny>
                         <option>11</option>
                         <option>16</option>
                         <option>17</option>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="input-field">
                     <p>Tempo</p>
-                    <input type="number" value="<?=(isset($_POST['minutos'])?$_POST['minutos']:'60')?>" name='minutos'>
+                    <input type="number" value="<?=(isset($_POST['minutes'])?$_POST['minutes']:'60')?>" name='minutes'>
                 </div>
             </div>
             <div class="calculate-btn">
@@ -38,7 +38,8 @@
             </div>
         </form>
     </section>
-    <?php if(isset($dadosCalculados)): ?>
+    <?php if(isset($dataPlan)): ?>
+        
         <section>
             <h1>Total a pagar</h1>
             <table>
@@ -50,39 +51,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr <?=($dadosCalculados->melhorPlano['nomePlano'] == 'semPlano' ? "class='best-plan'" : "");?> >
+                    <tr <?=($dataPlan->bestPlan['planName'] == 'semPlano' ? "class='best-plan'" : "");?> >
                         <td>Sem Plano</td>                           
-                        <td>R$<?=$dadosCalculados->semPlano['valorLigacao']?></td>
-                        <th>R$<?=$dadosCalculados->semPlano['valorTotal']?></th>          
+                        <td>R$<?=$dataPlan->withoutPlan['callValue']?></td>
+                        <th>R$<?=$dataPlan->withoutPlan['total']?></th>          
                     </tr>
-                    <tr <?=($dadosCalculados->melhorPlano['nomePlano'] == 'FaleMais 30' ? "class='best-plan'" : "");?> >
+                    <tr <?=($dataPlan->bestPlan['planName'] == 'FaleMais 30' ? "class='best-plan'" : "");?> >
                         <td>FaleMais 30</td>                           
-                        <td>R$<?=$dadosCalculados->faleMais30['valorLigacao']?></td>
-                        <th>R$<?=$dadosCalculados->faleMais30['valorTotal']?></th>
+                        <td>R$<?=$dataPlan->faleMais30['callValue']?></td>
+                        <th>R$<?=$dataPlan->faleMais30['total']?></th>
                     </tr>
-                    <tr <?=($dadosCalculados->melhorPlano['nomePlano'] == 'FaleMais 60' ? "class='best-plan'" : "");?> >
+                    <tr <?=($dataPlan->bestPlan['planName'] == 'FaleMais 60' ? "class='best-plan'" : "");?> >
                         <td>FaleMais 60</td>                         
-                        <td>R$<?=$dadosCalculados->faleMais60['valorLigacao']?></td>
-                        <th>R$<?=$dadosCalculados->faleMais60['valorTotal']?></th>
+                        <td>R$<?=$dataPlan->faleMais60['callValue']?></td>
+                        <th>R$<?=$dataPlan->faleMais60['total']?></th>
                     </tr>
-                    <tr <?=($dadosCalculados->melhorPlano['nomePlano'] == 'FaleMais 120' ? "class='best-plan'" : "");?> >
+                    <tr <?=($dataPlan->bestPlan['planName'] == 'FaleMais 120' ? "class='best-plan'" : "");?> >
                         <td>FaleMais 120</td> 
-                        <td>R$<?=$dadosCalculados->faleMais120['valorLigacao']?></td>
-                        <th>R$<?=$dadosCalculados->faleMais120['valorTotal']?></th>
+                        <td>R$<?=$dataPlan->faleMais120['callValue']?></td>
+                        <th>R$<?=$dataPlan->faleMais120['total']?></th>
                     </tr>
                 </tbody>
             </table>
         </section>
-        <?php if($dadosCalculados->melhorPlano['nomePlano']!='semPlano'):?>
+        <?php if($dataPlan->bestPlan['planName']!='semPlano'):?>
             <section>
                 <h1>Plano ideal para você</h1>
                 <div class="plan-card best-plan-card">
                     <div class="card-header">
-                        <h2><?=$dadosCalculados->melhorPlano['nomePlano']?></h2>
+                        <h2><?=$dataPlan->bestPlan['planName']?></h2>
                     </div>
                     <div class="card-body">
-                        <h2 class="bold">R$<?=$dadosCalculados->melhorPlano['valorPlano']?></h2>
-                        <p><?=$dadosCalculados->melhorPlano['minutos']?>minutos</p>
+                        <h2 class="bold">R$<?=$dataPlan->bestPlan['planValue']?></h2>
+                        <p><?=$dataPlan->bestPlan['minutes']?> minutos</p>
                     </div>
                 </div>
             </section>    
@@ -122,6 +123,6 @@
     </section>
 </main>
 <script>
-    select(<?=(isset($_POST['origem'])?$_POST['origem']:'11')?>,document.querySelector("#origem"));
-    select(<?=(isset($_POST['destino'])?$_POST['destino']:'11')?>,document.querySelector("#destino"));
+    select(<?=(isset($_POST['origin'])?$_POST['origin']:'11')?>,document.querySelector("#origin"));
+    select(<?=(isset($_POST['destiny'])?$_POST['destiny']:'11')?>,document.querySelector("#destiny"));
 </script>
