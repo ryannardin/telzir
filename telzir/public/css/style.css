@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+}
+h1, h2, h3, p, a, select, td, th {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    text-align: center;
+    color: #707070;
+}
+h1 {
+    font-size: 2.5rem;
+    color: #545454;
+}
+p {
+    font-size: 1.125rem;
+}
+section {
+    padding: 45px 0;
+    margin: auto;
+}
+section h1 {
+    padding-bottom: 23px;
+}
+#about p {
+    width: 80%;
+    max-width: 600px;
+    margin: auto;
+}
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: end;
+    padding-bottom: 30px;
+}
+.input-field {
+    text-align: center;
+    margin: 14px;
+}
+.input-field p {
+    margin-bottom: 6px;
+}
+.input-field input, option{
+    font-size: 1.125rem;
+    color: #707070;
+    height: 1000px;
+}
+option:nth-child(even) {
+    background-color: #F2F2F2;
+}
+.input-field select, .input-field input {
+    width: 115px;
+    height: 52px;
+    border-radius: 5px;
+    border: 1px solid #707070;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+select:hover, select:focus, .input-field input:hover, .input-field input:focus{
+    border-color: #FF6782;
+    color: #FF6782;
+    outline: none;
+}
+.calculate-btn {
+    width: 100%;
+    display: flex;
+}
+.calculate-btn button{
+    background-color: #545454;
+    color: #fff;
+    padding: 11px 43px;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    border: none;
+    margin: auto;
+    z-index: 1;
+    cursor: pointer;
+}
+table {
+    width: 80%;
+    max-width: 520px;
+    border-collapse: collapse;
+    border-radius: 0px 0px 5px 5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin: auto;
+}
+thead {
+    background-color: #FF6782;
+}
+thead td {
+    color: #fff;
+    padding: 28px 0;
+    font-size: 1.3125rem;
+}
+tbody td {
+    font-weight: 300;
+    padding: 11.5px 0;
+    font-size: 1.125rem;
+}
+tbody th {
+    font-weight: 700;
+}
+tbody tr:nth-child(even) {
+    background-color: #F2F2F2;
+}
+#other-plans {
+    background-color: #FF6782;
+    margin-top: 45px;
+    padding: 50px 0;
+}
+#other-plans h1 {
+    color: #fff;
+}
+.plan-card {
+    max-width: 212px;
+    flex: 1 1 212px;
+    background-color: #fff;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 5px 6px rgb(0 0 0 / 20%);
+    text-align: center;
+    margin: 50px;
+}
+.plan-card h2 {
+    font-size: 1.3125rem;
+}
+.card-header h2{
+    background-color: #545454;
+    color: #fff;
+    padding: 11.5px 0;
+}
+.card-body {
+    padding: 19px 0;
+}
+.card-body p {
+    font-size: 1.125rem;
+    font-weight: 300;
+}
+.best-plan-card {
+    margin: auto;
+}
+.best-plan td, .best-plan th{
+    color: #FF6782;
+}
+.best-plan-card .card-header h2{
+    background-image: linear-gradient(90deg, #FF6782, #ff5272);
+}
+.best-plan-card .card-body h2 {
+    color: #FF6782;
+}
+.others-card {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin: auto;
+}
+.bold {
+    font-weight: 700;
+}
+.fs-21 {
+    font-size: 1.3125rem;
+}
