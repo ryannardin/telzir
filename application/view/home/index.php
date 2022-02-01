@@ -51,39 +51,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr <?=($dataPlan->bestPlan['planName'] == 'semPlano' ? "class='best-plan'" : "");?> >
-                        <td>Sem Plano</td>                           
-                        <td>R$<?=$dataPlan->withoutPlan['callValue']?></td>
-                        <th>R$<?=$dataPlan->withoutPlan['total']?></th>          
-                    </tr>
-                    <tr <?=($dataPlan->bestPlan['planName'] == 'FaleMais 30' ? "class='best-plan'" : "");?> >
-                        <td>FaleMais 30</td>                           
-                        <td>R$<?=$dataPlan->faleMais30['callValue']?></td>
-                        <th>R$<?=$dataPlan->faleMais30['total']?></th>
-                    </tr>
-                    <tr <?=($dataPlan->bestPlan['planName'] == 'FaleMais 60' ? "class='best-plan'" : "");?> >
-                        <td>FaleMais 60</td>                         
-                        <td>R$<?=$dataPlan->faleMais60['callValue']?></td>
-                        <th>R$<?=$dataPlan->faleMais60['total']?></th>
-                    </tr>
-                    <tr <?=($dataPlan->bestPlan['planName'] == 'FaleMais 120' ? "class='best-plan'" : "");?> >
-                        <td>FaleMais 120</td> 
-                        <td>R$<?=$dataPlan->faleMais120['callValue']?></td>
-                        <th>R$<?=$dataPlan->faleMais120['total']?></th>
-                    </tr>
+                    <?php foreach($dataPlan as $plan): ?>
+                        <tr class="<?=($bestPlan->strPlanName==$plan->strPlanName?'best-plan':'')?>">
+                            <td><?=$plan->strPlanName?></td>                           
+                            <td>R$<?=number_format($plan->callPriece,2,',','.')?></td>
+                            <th>R$<?=number_format($plan->total,2,',','.')?></th>
+                        </tr>                           
+                    <?php endforeach;?>
                 </tbody>
             </table>
         </section>
-        <?php if($dataPlan->bestPlan['planName']!='semPlano'):?>
+        <?php if($bestPlan->strPlanName!='Sem Plano'):?>
             <section>
                 <h1>Plano ideal para você</h1>
                 <div class="plan-card best-plan-card">
                     <div class="card-header">
-                        <h2><?=$dataPlan->bestPlan['planName']?></h2>
+                        <h2><?=$bestPlan->strPlanName?></h2>
                     </div>
                     <div class="card-body">
-                        <h2 class="bold">R$<?=$dataPlan->bestPlan['planValue']?></h2>
-                        <p><?=$dataPlan->bestPlan['minutes']?> minutos</p>
+                        <h2 class="bold">R$<?=number_format($bestPlan->decPlanPriece,2,',','.')?></h2>
+                        <p><?=$bestPlan->intPlanMinutes?> minutos</p>
                     </div>
                 </div>
             </section>    
@@ -92,33 +79,18 @@
     <section id="other-plans">
         <h1>Planos</h1>
         <div class="others-card">
+
+        <?php foreach($plans as $plan): ?>
             <div class="plan-card">
                 <div class="card-header">
-                    <h2>FaleMais 30</h2>
+                    <h2><?=$plan->strPlanName?></h2>
                 </div>
                 <div class="card-body">
-                    <h2 class="bold">R$59,99</h2>
-                    <p>30 minutos</p>
+                    <h2 class="bold">R$<?=number_format($plan->decPlanPriece,2,',','.')?></h2>
+                    <p><?=$plan->intPlanMinutes?> minutos</p>
                 </div>
-            </div>
-            <div class="plan-card">
-                <div class="card-header">
-                    <h2>FaleMais 60</h2>
-                </div>
-                <div class="card-body">
-                    <h2 class="bold">R$109,90</h2>
-                    <p>60 minutos</p>
-                </div>
-            </div>
-            <div class="plan-card">
-                <div class="card-header">
-                    <h2>FaleMais 120</h2>
-                </div>
-                <div class="card-body">
-                    <h2 class="bold">R$199,99</h2>
-                    <p>120 minutos</p>
-                </div>
-            </div>
+            </div>                         
+        <?php endforeach;?>
         </div>
     </section>
 </main>

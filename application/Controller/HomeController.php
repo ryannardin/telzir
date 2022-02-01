@@ -3,22 +3,25 @@
 
 
 namespace Mini\Controller;
-use Mini\Model\Plano;
+use Mini\Model\Plan;
 class HomeController
 {
     public function index()
     {
-        
+        $plan = new Plan();
+        $plans= $plan->getAllPlans();
         view('_templates/header.php');
-        view('home/index.php');
+        view('home/index.php',["plans"=>$plans]);
         view('_templates/footer.php');
     }
     public function calcularPlano()
     {
-        $plano = new Plano();
-        $dataPlan= $plano->calcPlan($_POST['origin'],$_POST['destiny'],$_POST['minutes']);  
+        $plan = new Plan();
+        $plans= $plan->getAllPlans();
+        $dataPlan= $plan->calcPlan($_POST['origin'],$_POST['destiny'],$_POST['minutes']);  
+        $bestPlan=$plan->searchBestPlan($dataPlan);
         view('_templates/header.php');
-        view('home/index.php',["dataPlan" => $dataPlan,'minutes'=>$_POST['minutes']]);
+        view('home/index.php',["dataPlan" => $dataPlan,"bestPlan"=>$bestPlan,"minutes"=>$_POST['minutes'],"plans"=>$plans]);
         view('_templates/footer.php');
     }
 }
