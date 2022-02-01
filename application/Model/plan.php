@@ -63,10 +63,10 @@ class Plan extends Model
 
     }
     public function searchBestPlan($dataPlan){
-        $lowerValue=0;
+        $lowerValue=null;
         $lowerKey=0;
         foreach ($dataPlan as $key => $plan) {
-            if($plan->total<$lowerValue || !$lowerValue){
+            if($plan->total<$lowerValue || $lowerValue!=null){
                 $lowerValue=$plan->total;
                 $lowerKey=$key;     
             }
