@@ -15,7 +15,6 @@ class Plan extends Model
         $plans=$this->calcFaleMais($origin,$destiny,$minutes);
         $dataPlan[0]=(object) ['callPriece'=>$minutes*$value,'total'=>$minutes*$value,'planValue'=>0,'strPlanName'=>'Sem Plano'];
         $dataPlan=array_merge($dataPlan, $plans); 
-        
         return $dataPlan;
     }
     public function getAllPlans(){
@@ -63,10 +62,10 @@ class Plan extends Model
 
     }
     public function searchBestPlan($dataPlan){
-        $lowerValue=null;
+        $lowerValue=0;
         $lowerKey=0;
         foreach ($dataPlan as $key => $plan) {
-            if($plan->total<$lowerValue || $lowerValue!=null){
+            if($plan->total<$lowerValue || !$lowerValue){
                 $lowerValue=$plan->total;
                 $lowerKey=$key;     
             }
