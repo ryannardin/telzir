@@ -37,24 +37,30 @@ class Plan extends Model
             END as callPriece,
             CASE
                 WHEN :mins <= intPlanMinutes THEN decPlanPriece
+                WHEN intCallID IS NULL THEN decPlanPriece
                 ELSE ((decPlanPriece)+(1.1*decCallPriece)*:mins)
             END as total
         FROM tb_plans 
-            inner join tb_calls 
+            left join tb_calls 
             on strCallOrigin=:origin 
             AND strCallDestiny=:destiny
         ORDER BY intPlanID";
         $query = $this->db->prepare($sql);
         $query->execute([':origin'=>$origin,':destiny'=>$destiny,':mins'=>$minutes]);
 
-        // echo '[ PDO DEBUG ]: ' . Helper::debugPDO($sql, [':origin'=>$origin,':destiny'=>$destiny,':minutes'=>$minutes]);
         return $query->fetchAll();
     }
     private function searchvalues($origin, $destiny) {
         $sql = "SELECT * FROM tb_calls WHERE strCallOrigin=:origin AND strCallDestiny=:destiny";
         $query = $this->db->prepare($sql);
         $query->execute([':origin'=>$origin,':destiny'=>$destiny]);
-        return $query->fetch();
+        $values= $query->fetch();
+
+        if($values)
+            return $values;
+        else
+            return (object)['decCallPriece'=>0];
+
     }
     public function searchBestPlan($dataPlan){
         $lowerValue=0;
